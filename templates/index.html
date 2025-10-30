@@ -1,1 +1,205 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Analyzer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <span>AI Resume Analyzer</span>
+                </div>
+                <div class="ai-indicator">
+                    <div class="pulse"></div>
+                    <span>AI Powered</span>
+                </div>
+            </div>
+        </header>
+        
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="resume">
+                <i class="fas fa-file-text"></i>
+                <span>Resume Analysis</span>
+            </button>
+            <button class="nav-tab" data-tab="job-match">
+                <i class="fas fa-crosshairs"></i>
+                <span>Job Matching</span>
+            </button>
+            <button class="nav-tab" data-tab="cover-letter">
+                <i class="fas fa-envelope-open"></i>
+                <span>Cover Letter</span>
+            </button>
+            <button class="nav-tab" data-tab="job-search">
+                <i class="fas fa-search"></i>
+                <span>Job Search</span>
+            </button>
+        </nav>
+        
+        <main class="main-content">
+            <!-- Resume Analysis Tab -->
+            <div class="tab-content active" id="resume">
+                <div class="grid">
+                    <div class="glass-card upload-card">
+                        <div class="card-header">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Upload Resume</h3>
+                        </div>
+                        <form id="uploadForm" enctype="multipart/form-data">
+                            <div class="upload-zone">
+                                <div class="upload-icon">
+                                    <i class="fas fa-file-upload"></i>
+                                </div>
+                                <input type="file" id="resumeFile" name="resume" accept=".pdf,.docx,.txt">
+                                <p>Drag & drop or click to upload<br><span>PDF, DOCX, or TXT format</span></p>
+                            </div>
+                            <button type="submit" class="ai-button">
+                                <i class="fas fa-brain"></i>
+                                <span>Analyze with AI</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="glass-card results-card">
+                        <div id="results" class="results-content">
+                            <div class="empty-state">
+                                <i class="fas fa-chart-line"></i>
+                                <h4>AI Analysis Ready</h4>
+                                <p>Upload your resume to see intelligent insights</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Job Matching Tab -->
+            <div class="tab-content" id="job-match">
+                <div class="grid">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <i class="fas fa-crosshairs"></i>
+                            <h3>Job Matching</h3>
+                        </div>
+                        <form id="jobMatchForm">
+                            <div class="input-group">
+                                <label>Job Description</label>
+                                <textarea id="jobDescription" rows="12" placeholder="Paste the complete job description here..."></textarea>
+                            </div>
+                            <button type="submit" class="ai-button">
+                                <i class="fas fa-magic"></i>
+                                <span>Match with AI</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="glass-card results-card">
+                        <div id="jobResults" class="results-content">
+                            <div class="empty-state">
+                                <i class="fas fa-bullseye"></i>
+                                <h4>Smart Job Matching</h4>
+                                <p>Upload resume first, then analyze job compatibility</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cover Letter Tab -->
+            <div class="tab-content" id="cover-letter">
+                <div class="grid">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <i class="fas fa-envelope-open"></i>
+                            <h3>AI Cover Letter</h3>
+                        </div>
+                        <form id="coverLetterForm">
+                            <div class="input-group">
+                                <label>Company Name</label>
+                                <input type="text" id="companyName" placeholder="e.g., Google, Microsoft">
+                            </div>
+                            <div class="input-group">
+                                <label>Position Title</label>
+                                <input type="text" id="position" placeholder="e.g., Software Engineer">
+                            </div>
+                            <div class="input-group">
+                                <label>Job Description</label>
+                                <textarea id="jobDescForCover" rows="6" placeholder="Paste job description here..."></textarea>
+                            </div>
+                            <div class="input-group">
+                                <label>Tone</label>
+                                <select id="tone">
+                                    <option value="professional">Professional</option>
+                                    <option value="enthusiastic">Enthusiastic</option>
+                                    <option value="creative">Creative</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="ai-button">
+                                <i class="fas fa-wand-magic-sparkles"></i>
+                                <span>Generate with AI</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="glass-card results-card">
+                        <div id="coverLetterResults" class="results-content">
+                            <div class="empty-state">
+                                <i class="fas fa-file-signature"></i>
+                                <h4>AI Cover Letter Generator</h4>
+                                <p>Fill the form to create a personalized cover letter</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Job Search Tab -->
+            <div class="tab-content" id="job-search">
+                <div class="grid job-search-grid">
+                    <div class="glass-card search-card">
+                        <div class="card-header">
+                            <i class="fas fa-search"></i>
+                            <h3>Job Search</h3>
+                        </div>
+                        <form id="jobSearchForm">
+                            <div class="input-group">
+                                <label>Job Title</label>
+                                <input type="text" id="jobTitle" placeholder="e.g., Software Engineer">
+                            </div>
+                            <div class="input-group">
+                                <label>Location</label>
+                                <input type="text" id="location" placeholder="e.g., New York, NY">
+                            </div>
+                            <div class="input-group">
+                                <label>Experience Level</label>
+                                <select id="experienceLevel">
+                                    <option value="entry_level">Entry Level</option>
+                                    <option value="mid_level">Mid Level</option>
+                                    <option value="senior_level">Senior Level</option>
+                                    <option value="executive">Executive</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="ai-button">
+                                <i class="fas fa-rocket"></i>
+                                <span>Find Jobs</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="glass-card results-card job-results">
+                        <div id="jobSearchResults" class="results-content">
+                            <div class="empty-state">
+                                <i class="fas fa-briefcase"></i>
+                                <h4>Smart Job Discovery</h4>
+                                <p>Enter job criteria to find perfect opportunities</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
